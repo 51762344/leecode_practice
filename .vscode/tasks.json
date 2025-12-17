@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "编译当前LeetCode题目",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "PROBLEM_NUM=$(cat .current_problem 2>/dev/null || echo '001'); TEST_FILE=$(ls tests/${PROBLEM_NUM}_*.cpp 2>/dev/null | head -1); if [ -z \"$TEST_FILE\" ]; then echo \"错误: 找不到测试文件 tests/${PROBLEM_NUM}_*.cpp\"; exit 1; fi; g++ -std=c++17 -g -Wall -Wextra \"$TEST_FILE\" -o template_run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "根据.current_problem文件编译对应的测试文件（带调试信息）"
+        },
+        {
+            "label": "运行当前LeetCode题目",
+            "type": "shell",
+            "command": "./run.sh",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "detail": "编译并运行当前题目的测试"
+        }
+    ]
+}
